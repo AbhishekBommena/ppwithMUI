@@ -44,8 +44,8 @@ function ReceiverForm(props) {
     }
     useEffect(() => { props.receiveReceiverData(receiverDetails) }, [receiverDetails])
     return (
-        <Grid container className='grid-content'>
-            <Grid xs={12} md={6} className="grid-item" >
+        <Grid container rowSpacing={3} className='grid-content'>
+            <Grid item xs={12} md={6} className="grid-item" >
                 <TextField required
                     error={errorHandler}
                     className="inputField"

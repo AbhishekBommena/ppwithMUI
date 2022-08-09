@@ -17,7 +17,7 @@ function Receiver(props) {
     }
     return (
         <>
-            <Grid xs={12} md={6} className="grid-item">
+            <Grid item xs={12} md={6} className="grid-item">
                 <TextField  id="filled-read-only-input"
                     InputProps={{
                         readOnly: true,
@@ -28,7 +28,7 @@ function Receiver(props) {
                     value={receiverDetails?.instituteName ?? ""} 
                     />
             </Grid>
-            <Grid xs={12} md={6} className="grid-item">
+            <Grid item xs={12} md={6} className="grid-item">
                 <TextField 
                     required
                     id="filled-read-only-input"
@@ -39,7 +39,7 @@ function Receiver(props) {
                     onChange={handleAcctHolderName}
                 />
             </Grid>
-            <Grid xs={12} md={6} className="grid-item">
+            <Grid item xs={12} md={6} className="grid-item">
                 <TextField
                     required
                     className="inputField"
