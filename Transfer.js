@@ -54,7 +54,9 @@ function Transfer(props) {
     }
 
     useEffect(() => {
+        // CHANGED LENGTH TO 5
         if (customerid.length === 5) {
+            // CHANGED AXIOS LINK
             axios.get(`http://localhost:8080/Customers/${customerid}`)
                 .then((res) => {
                     // console.log(res);
@@ -97,7 +99,8 @@ function Transfer(props) {
     useEffect(() => {
         const lengthOfBic = bic.length
         if (lengthOfBic === 11) {
-            axios.get(`http://localhost:8080/receiver/${bic}`)
+            // CHANGED AXIOS LINK
+            axios.get(`http://localhost:8080/users/${bic}`)
                 .then((res) => {
                     setReceiverDetails(res.data)
                     setReceiverNotFound(null)
