@@ -1,0 +1,10 @@
+/* styling input fields(TextField Component) */
+.inputField{
+    width: 60%;
+    /* Below is for dropdown text to be aligned left */
+    text-align: left; 
+}
+/* Below is for aligning grid items center */
+.grid-item{
+    text-align: center;
+}
