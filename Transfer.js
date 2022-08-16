@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import Alert from '@mui/material/Alert';
+
 import { MenuItem } from '@mui/material';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import CurrencyPoundIcon from "@mui/icons-material/CurrencyPound"
@@ -20,8 +22,21 @@ function Transfer() {
 
     // getting date 
     const dateObject = new Date();
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let day = days[dateObject.getDay()];
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const date = dateObject.getDate() + " / " + months[dateObject.getMonth()] + " / " + dateObject.getFullYear();
+
+    const [disableCustomerId, setDisableCustomerId] = useState(false)
+
+    day = "Saturday"
+    useEffect(() => {
+        if (day === "Saturday" || day === "Sunday") {
+            console.log("sunday")
+            setDisableCustomerId(true)
+        }
+    }, [])
+
 
     // customer Variables
     const [customerErrorHandler, setCustomerErrorHandler] = useState(false)
@@ -210,6 +225,17 @@ function Transfer() {
                     mt: "5%"
                 }}
             >
+                
+                <Grid container >
+                    <Grid item xs={6}>
+                    <Typography variant="body2" gutterBottom>
+                    <Alert severity="warning">
+                        Saturday and Sunday Transactions are not Allowed
+                    </Alert>
+                </Typography>
+                    </Grid>
+                </Grid>
+
                 <Grid container rowSpacing={3}>
                     <Grid item xs={12} md={6} className="grid-item">
                         <Typography variant="h5" className="side-heading"
@@ -248,6 +274,8 @@ function Transfer() {
                             variant="filled"
                             value={customerid}
                             onChange={handleCustomerId}
+                            disabled={disableCustomerId}
+
                         />
                     </Grid>
                     <Grid item xs={12} md={6} className="grid-item">
@@ -451,8 +479,8 @@ function Transfer() {
                             endIcon={<SendIcon />}
                             sx={{
                                 bgcolor: "#123463",
-                                '&:hover':{
-                                    bgcolor:"#415c82"
+                                '&:hover': {
+                                    bgcolor: "#415c82"
                                 }
                             }}
                             onClick={handleSubmit}
