@@ -35,7 +35,7 @@ function Home() {
                                 color: 'white'
                             }}
                         >
-                            LOGO
+                            PayOnline
                         </Typography>
                         <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: "white" }} />
                         <Typography
@@ -54,7 +54,7 @@ function Home() {
                                 textDecoration: 'none',
                             }}
                         >
-                            LOGO
+                            PayOnline
                         </Typography>
                         <Box sx={{ flexGrow: 1, textAlign: "right" }}>
                             <Button sx={{ color: "white" }} onClick={handleLogin}>Login</Button>
@@ -72,10 +72,10 @@ function Home() {
                 }} >
                 <Grid container >
                     <Grid item xs={12} md={6}  className="grid-item">
-                        <img src={transactionImage} height={450} width={450} alt="normal_image" />
+                        <img src={transactionImage} height="100%" width="50%" alt="normal_image" />
                     </Grid>
                     <Grid item xs={12} md={6} className="grid-item">
-                        <Typography variant="h3" sx={{ color: "#123463" }} component="div" gutterBottom>
+                        <Typography variant="h3" sx={{ color: "#123463",mt:'4rem' }} component="div" gutterBottom>
                             Banking Karlo
                         </Typography>
                     </Grid>

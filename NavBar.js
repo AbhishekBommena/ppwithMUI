@@ -10,13 +10,14 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 const NavBar = () => {
   let navigate = useNavigate();
   const handleTransferBtn = () => {
     navigate("/transfer")
   }
+
   const handleDashboardBtn = () => {
     navigate("/dashboard")
   }
@@ -53,7 +54,7 @@ const NavBar = () => {
               color: 'white'
             }}
           >
-            LOGO
+            PayOnline
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, color: "white" }}>
@@ -85,11 +86,11 @@ const NavBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Dashboard</Typography>
+              <MenuItem onClick={handleDashboardBtn}>
+                Dashboard
               </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Transfer</Typography>
+              <MenuItem onClick={handleTransferBtn}>
+                Transfer
               </MenuItem>
             </Menu>
           </Box>
@@ -110,14 +111,19 @@ const NavBar = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            PayOnline
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Button sx={{ color: "white" }} onClick={handleDashboardBtn} >Dashboard</Button>
+            <Button
+              sx={{
+                color: "white",
+                "&:active":
+                  { borderBottom: 1 }
+              }} onClick={handleDashboardBtn} >Dashboard</Button>
             <Button sx={{ color: "white" }} onClick={handleTransferBtn} >Transfer</Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Button sx={{ color: "white" }} onClick={ handleLogoutBtn }>Logout</Button>
+            <Button sx={{ color: "white" }} onClick={handleLogoutBtn}>Logout</Button>
           </Box>
         </Toolbar>
       </Container>

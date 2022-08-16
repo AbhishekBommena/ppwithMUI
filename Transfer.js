@@ -212,7 +212,7 @@ function Transfer() {
             >
                 <Grid container rowSpacing={3}>
                     <Grid item xs={12} md={6} className="grid-item">
-                        <Typography variant="h5"
+                        <Typography variant="h5" className="side-heading"
                             sx={{
                                 color: "#123463",
                                 fontWeight: "bold",
@@ -296,7 +296,7 @@ function Transfer() {
                 </Grid>
                 <Grid container rowSpacing={3} sx={{ mt: "8px" }}>
                     <Grid item xs={12} md={6} className="grid-item">
-                        <Typography variant="h5"
+                        <Typography variant="h5" className="side-heading"
                             sx={{
                                 color: "#123463",
                                 fontWeight: "bold",
@@ -359,7 +359,7 @@ function Transfer() {
                 </Grid>
                 <Grid container rowSpacing={3} sx={{ mt: "8px" }}>
                     <Grid item xs={12} md={6} className="grid-item">
-                        <Typography variant="h5"
+                        <Typography variant="h5" className="side-heading"
                             sx={{
                                 color: "#123463",
                                 fontWeight: "bold",
@@ -415,6 +415,7 @@ function Transfer() {
                             label="Amount"
                             variant="filled"
                             className="inputField"
+                            type="number"
                             // error={errorHandler}
                             // helperText={amountExceedingErr}
                             value={currencyamount}
@@ -449,7 +450,10 @@ function Transfer() {
                             size="medium"
                             endIcon={<SendIcon />}
                             sx={{
-                                bgcolor: "#123463"
+                                bgcolor: "#123463",
+                                '&:hover':{
+                                    bgcolor:"#415c82"
+                                }
                             }}
                             onClick={handleSubmit}
                             className="inputField"

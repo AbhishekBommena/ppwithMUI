@@ -96,7 +96,7 @@ function Login() {
                                 color: 'white'
                             }}
                         >
-                            LOGO
+                            PayOnline
                         </Typography>
                         <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: "white" }} />
                         <Typography
@@ -115,7 +115,7 @@ function Login() {
                                 textDecoration: 'none',
                             }}
                         >
-                            LOGO
+                            PayOnline
                         </Typography>
                         <Box sx={{ flexGrow: 1, textAlign: "right" }}>
                             <Button sx={{ color: "white" }} onClick={handleBack}>Back</Button>
@@ -131,7 +131,7 @@ function Login() {
                     borderRadius: "2rem",
                     mt: "5%"
                 }} >
-                <Grid container spacing={3} sx={{ width: "50%", ml: "25%" }}>
+                <Grid container spacing={3} >
                     <Grid item xs={12} className="grid-item">
                         <LockIcon sx={{ fontSize: "6rem", color: "#123463" }} />
                     </Grid>
@@ -177,7 +177,10 @@ function Login() {
                             variant="contained"
                             sx={{
                                 bgcolor: "#123463",
-                                width: "60%"
+                                width: "60%",
+                                '&:hover':{
+                                    bgcolor:"#415c82"
+                                }
                             }}
                             endIcon={<LoginIcon />}
                             onClick={handleLoginBtn}
