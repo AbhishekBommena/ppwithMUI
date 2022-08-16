@@ -71,10 +71,10 @@ function Home() {
                     mt: "5%"
                 }} >
                 <Grid container >
-                    <Grid item xs={6} className="grid-item">
+                    <Grid item xs={12} md={6}  className="grid-item">
                         <img src={transactionImage} height={450} width={450} alt="normal_image" />
                     </Grid>
-                    <Grid item xs={6} className="grid-item">
+                    <Grid item xs={12} md={6} className="grid-item">
                         <Typography variant="h3" sx={{ color: "#123463" }} component="div" gutterBottom>
                             Banking Karlo
                         </Typography>

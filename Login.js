@@ -8,7 +8,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import LoginIcon from '@mui/icons-material/Login';
 import LockIcon from '@mui/icons-material/Lock';
-import { Container,Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
+import axios from 'axios';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,16 +18,63 @@ import AdbIcon from '@mui/icons-material/Adb';
 import "../css/Login.css"
 import { useNavigate } from 'react-router-dom';
 function Login() {
+
+    const [incorrectPasswordErr, setIncorrectPasswordErr] = useState(false)
+    const [passwordNotFound, setPasswordNotFound] = useState("")
+    const [userNotFound, setUserNotFound] = useState(false)
+    const [userNotFoundError, setUserNotFoundError] = useState("")
+
     let navigate = useNavigate()
+
     const handleLoginBtn = () => {
-        navigate("/dashboard")
+
+        if( userName.length === 0 && password.length === 0){
+            setPasswordNotFound("Please fill password")
+            setUserNotFoundError("Please fill User Name")
+            setIncorrectPasswordErr(true)
+            setUserNotFound(true)
+        }
+        else{
+        axios.get(`http://localhost:8080/loggers/${userName}`)
+            .then((res) => {
+                if (password !== res.data.password) {
+                    setIncorrectPasswordErr(true)
+                    setPasswordNotFound("Incorrect Password")
+                }
+                else {
+                    navigate("/dashboard")
+
+                }
+            })
+            .catch(err => {
+                setUserNotFound(true)
+                setUserNotFoundError("User Name not found !")
+            })
+        }
     }
-    const handleBack = () =>{
+    const handleBack = () => {
         navigate("/")
     }
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
+    const [userName, setUserName] = useState("")
+    const [password, setPassword] = useState("")
+    const handleUserName = (event) => {
+        setUserName(event.target.value)
+        setUserNotFound(false)
+        setUserNotFoundError("")
+        setIncorrectPasswordErr(false)
+        setPasswordNotFound("")
+    }
+    const handlePassword = (event) => {
+        setPassword(event.target.value)
+        setIncorrectPasswordErr(false)
+        setPasswordNotFound("")
+    }
+
+
     return (
         <>
             <AppBar position="static" color='transparent'>
@@ -87,17 +135,16 @@ function Login() {
                     <Grid item xs={12} className="grid-item">
                         <LockIcon sx={{ fontSize: "6rem", color: "#123463" }} />
                     </Grid>
-                    {/* <Grid item xs={12}>
-                    <Typography variant="h5" component="div" gutterBottom >
-                        Login
-                    </Typography>
-                </Grid> */}
-                    <Grid item xs={12} className="grid-item"> 
+                    <Grid item xs={12} className="grid-item">
                         <TextField
                             sx={{ width: "60%" }}
                             id="filled-basic"
+                            value={userName}
                             label="User Name"
-                            variant="filled" />
+                            onChange={handleUserName}
+                            variant="filled"
+                            error={userNotFound}
+                            helperText={userNotFoundError} />
                     </Grid>
                     <Grid item xs={12} className="grid-item">
                         <TextField
@@ -105,6 +152,10 @@ function Login() {
                             id="filled-basic"
                             label="Password"
                             variant="filled"
+                            value={password}
+                            error={incorrectPasswordErr}
+                            helperText={passwordNotFound}
+                            onChange={handlePassword}
                             type={showPassword ? "text" : "password"} // <-- This is where the magic happens
                             InputProps={{ // <-- This is where the toggle button is added.
                                 endAdornment: (
@@ -129,7 +180,7 @@ function Login() {
                                 width: "60%"
                             }}
                             endIcon={<LoginIcon />}
-                            onClick={ handleLoginBtn }
+                            onClick={handleLoginBtn}
                         >Login
                         </Button>
                     </Grid>

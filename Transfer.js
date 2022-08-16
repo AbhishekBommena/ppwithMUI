@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-import {  MenuItem } from '@mui/material';
+import { MenuItem } from '@mui/material';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import CurrencyPoundIcon from "@mui/icons-material/CurrencyPound"
 import CurrencyYenIcon from "@mui/icons-material/CurrencyYen"
@@ -17,8 +17,6 @@ import Container from '@mui/material/Container';
 import NavBar from './NavBar';
 
 function Transfer() {
-
-    
 
     // getting date 
     const dateObject = new Date();
@@ -49,6 +47,8 @@ function Transfer() {
     const [transferfee, setTransferFee] = useState(0);
     const [inramount, setInrAmount] = useState(0);
 
+    // ErrorHandlers
+
     const handleAccountHolderNumber = (e) => {
         setAccountHolderNumber(e.target.value);
     }
@@ -61,7 +61,6 @@ function Transfer() {
         if (customerid.length === 5) {
             axios.get(`http://localhost:8080/Customers/${customerid}`)
                 .then((res) => {
-                    // console.log(res);
                     setCustDetails(res.data)
                     setClearBalance(res.data.clearbalance)
                     setCustIdNotFound(null)
@@ -97,6 +96,7 @@ function Transfer() {
     //     setAccountHolderName("")
     //     setAccountHolderNumber("")
     // }, [customerid])
+
 
     useEffect(() => {
         const lengthOfBic = bic.length
@@ -142,10 +142,18 @@ function Transfer() {
         setCurrencyCode(e.target.value)
     }
 
-   
+
+    const handleValidation = () => {
+        if (customerid.length > 0 && currencycode.length > 0 &&
+            bic.length > 0 && accountholdername.length > 0 &&
+            accountholdernumber.length > 0 && transfertypecode.length > 0
+            && messagecode.length > 0 && currencyamount.length > 0) {
+            return false
+        }
+        return true
+    }
 
     const handleSubmit = (e) => {
-        console.log("helo")
         e.preventDefault();
         const data = {
             customerid: customerid, //dbtable:frontend
@@ -160,19 +168,15 @@ function Transfer() {
             transferfees: transferfee,
             inramount: inramount,
         };
-        console.log(data[0])
 
         axios.post("http://localhost:8080/api/transactions", data)
             .then(res => {
                 console.log(res.data)
-
             })
             .catch(err => {
                 console.log(err);
             })
     }
-
-
     const handleCurrencyAmount = (e) => {
         const currencyamount = e.target.value
         if (currencyamount > clearbalance) {
@@ -274,6 +278,7 @@ function Transfer() {
                         <TextField
                             className='inputField'
                             id="outlined-select-currency"
+                            // error={currencyErr}
                             select
                             label="Currency"
                             value={currencycode}
@@ -448,11 +453,11 @@ function Transfer() {
                             }}
                             onClick={handleSubmit}
                             className="inputField"
-                            disabled={true}
+                            disabled={handleValidation()}
                         >
                             Transfer
                         </Button><br />
-                        <Typography variant="caption" sx={{ mt:"8px" }} display="block" gutterBottom>
+                        <Typography variant="caption" sx={{ mt: "8px" }} display="block" gutterBottom>
                             *Button is enabled only if all fields are filled.
                         </Typography>
                     </Grid>
