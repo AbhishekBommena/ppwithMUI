@@ -22,17 +22,19 @@ function Transfer() {
 
     // getting date 
     const dateObject = new Date();
+    // CHANGED
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     let day = days[dateObject.getDay()];
+    
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const date = dateObject.getDate() + " / " + months[dateObject.getMonth()] + " / " + dateObject.getFullYear();
 
     const [disableCustomerId, setDisableCustomerId] = useState(false)
 
+    // CHANGED
     day = "Saturday"
     useEffect(() => {
         if (day === "Saturday" || day === "Sunday") {
-            console.log("sunday")
             setDisableCustomerId(true)
         }
     }, [])
@@ -45,6 +47,9 @@ function Transfer() {
     const [custDetails, setCustDetails] = useState({});
     const [clearbalance, setClearBalance] = useState("");
     const [currencycode, setCurrencyCode] = useState("");
+    // CHANGED
+    const [overdraftErr, setOverdraftErr] = useState(false)
+    const [overdraftErrText, setOverdraftErrText] = useState("")
 
 
     // receiver Variables
@@ -213,6 +218,20 @@ function Transfer() {
 
 
     }
+    // CHANGED
+    useEffect(() => {
+        if (parseInt(currencyamount) > parseInt(custDetails.clearBalance) && custDetails.overdraft === "no") {
+            setOverdraftErr(true)
+
+            setOverdraftErrText("Balance is less than Amount to be sent.")
+        }
+        else {
+            setOverdraftErr(false)
+
+            setOverdraftErrText("")
+
+        }
+    }, [currencyamount])
 
     return (
         <>
@@ -225,16 +244,14 @@ function Transfer() {
                     mt: "5%"
                 }}
             >
-                
-                <Grid container >
+{/* CHANGED */}
+                {disableCustomerId && <Grid container >
                     <Grid item xs={6}>
-                    <Typography variant="body2" gutterBottom>
-                    <Alert severity="warning">
-                        Saturday and Sunday Transactions are not Allowed
-                    </Alert>
-                </Typography>
+                        <Alert severity="warning">
+                            Saturday and Sunday Transactions are not Allowed
+                        </Alert>
                     </Grid>
-                </Grid>
+                </Grid>}
 
                 <Grid container rowSpacing={3}>
                     <Grid item xs={12} md={6} className="grid-item">
@@ -444,8 +461,9 @@ function Transfer() {
                             variant="filled"
                             className="inputField"
                             type="number"
-                            // error={errorHandler}
-                            // helperText={amountExceedingErr}
+                            // CHANGED
+                            error={overdraftErr}
+                            helperText={overdraftErrText}
                             value={currencyamount}
                             onChange={handleCurrencyAmount}
                         />
